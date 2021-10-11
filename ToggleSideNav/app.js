@@ -1,15 +1,15 @@
 // toggle side nav
+
+// DOM Nodes
 const $nav = document.querySelector('nav');
 const $main = document.querySelector('main');
 const $toggleButton = document.querySelector('i.toggle');
 
 const toggleClass = $node => $node.classList.toggle('active');
 
-localStorage.setItem('navState', 'false');
-
+// state function
 const fetchNav = () => {
-  //   localStorage.setItem('navState', 'false');
-  if (localStorage.getItem('navState')) {
+  if (localStorage.getItem('navState') === 'true') {
     $nav.classList.add('active');
     $nav.classList.add('notransition');
     $main.classList.add('notransition');
@@ -19,6 +19,7 @@ const fetchNav = () => {
   }
 };
 
+// Event bindings
 window.addEventListener('DOMContentLoaded', fetchNav);
 
 $toggleButton.onclick = () => {
@@ -28,6 +29,6 @@ $toggleButton.onclick = () => {
   $toggleButton.classList.remove('notransition');
 
   $nav.classList.contains('active')
-    ? localStorage.setItem('navState', 'false')
-    : localStorage.setItem('navState', 'true');
+    ? localStorage.setItem('navState', 'true')
+    : localStorage.setItem('navState', 'false');
 };
