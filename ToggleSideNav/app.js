@@ -14,6 +14,8 @@ const fetchNav = () => {
     $nav.classList.add('notransition');
     $main.classList.add('notransition');
     $toggleButton.classList.add('notransition');
+  } else {
+    localStorage.setItem('navState', 'false');
   }
 };
 
