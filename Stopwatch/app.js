@@ -1,7 +1,6 @@
 const $display = document.querySelector('.display');
-const $stopwatch = document.querySelector('.stopwatch');
-
 const [$leftButton, $rightButton] = document.querySelectorAll('.control');
+const $laps = document.querySelector('.laps');
 
 let timerState = true;
 let [min, sec, mm] = [0, 0, 0];
@@ -26,14 +25,43 @@ const startTime = () => {
 let stopWatch = null;
 
 $leftButton.onclick = () => {
-  $leftButton.textContent = timerState ? 'Start' : 'Stop';
-  $rightButton.textContent = timerState ? 'Reset' : 'Lap';
+  timerState = !timerState;
 
   if ($leftButton.firstChild.nodeValue === 'Start') {
     stopWatch = setInterval(startTime, 10);
-    timerState = !timerState;
+    $rightButton.disabled = false;
   } else {
     clearInterval(stopWatch);
-    timerState = !timerState;
+  }
+
+  $leftButton.textContent = timerState ? 'Start' : 'Stop';
+  $rightButton.textContent = timerState ? 'Reset' : 'Lap';
+};
+
+$laps.style.display = 'none';
+
+const lapList = [];
+$rightButton.onclick = () => {
+  if ($rightButton.firstChild.nodeValue === 'Reset') {
+    $display.textContent = `00:00:00`;
+    $rightButton.disabled = true;
+    [min, sec, mm] = [0, 0, 0];
+  } else {
+    $laps.style.display = 'grid';
+    lapList.push($display.firstChild.nodeValue);
+    const $fragment = document.createDocumentFragment();
+    lapList.forEach((list, idx) => {
+      const $lap = document.createElement('div');
+      const lapTime = document.createTextNode(list);
+      const $order = document.createElement('div');
+      const orderNum = document.createTextNode(idx + 1);
+
+      $lap.appendChild(lapTime);
+      $order.appendChild(orderNum);
+
+      $fragment.appendChild($lap);
+      $fragment.appendChild($order);
+    });
+    $laps.appendChild($fragment);
   }
 };
