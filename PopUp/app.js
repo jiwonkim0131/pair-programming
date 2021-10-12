@@ -7,6 +7,7 @@ const $popupMessage = document.querySelector('.popup-message');
 
 $togglePopUp.onclick = () => {
   $modalWrap.classList.toggle('active');
+  $input.focus();
 };
 
 $form.onsubmit = e => {
