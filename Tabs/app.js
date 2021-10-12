@@ -52,10 +52,18 @@ const fetchTabsData = () =>
     );
   }).then(v => render(v));
 
-$tabs.onclick = e => {
-  const $tabContent = document.querySelectorAll('.tab-content');
-  if (!e.target.classList.contains('tab')) return;
-  console.log(e.target.dataset.index);
-};
-
 window.addEventListener('DOMContentLoaded', fetchTabsData);
+
+$tabs.onclick = e => {
+  if (!e.target.classList.contains('tab')) return;
+
+  const $tabContent = document.querySelectorAll('.tab-content');
+  const $glider = document.querySelector('.glider');
+
+  [...$tabContent].map((v, idx) =>
+    v.classList.toggle('active', +e.target.dataset.index === idx)
+  );
+
+  const tabWidth = getComputedStyle($tabs).getPropertyValue('--tab-width');
+  $glider.style.left = `${tabWidth * e.target.dataset.index}px`;
+};
