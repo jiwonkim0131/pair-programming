@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Accordion</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400"
+      rel="stylesheet"
+    />
+    <link
+      href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      *,
+      *:before,
+      *:after {
+        box-sizing: border-box;
+      }
+      .title {
+        color: #db5b33;
+        font-weight: 300;
+        text-align: center;
+      }
+      body {
+        font-family: 'Open Sans';
+        font-weight: 300;
+        background-color: #d6e1e5;
+      }
+      .accordion {
+        max-width: 360px;
+        margin: 20px auto;
+        background: #fff;
+        box-shadow: 0 7px 8px -4px rgba(0, 0, 0, 0.2),
+          0 13px 19px 2px rgba(0, 0, 0, 0.14),
+          0 5px 24px 4px rgba(0, 0, 0, 0.12);
+        border-radius: 5px;
+        /* opacity: 0; */
+      }
+      .accordion > .menu-container > .menu {
+        position: relative;
+        padding: 15px 15px 15px 45px;
+        color: #4d4d4d;
+        font-weight: bold;
+        border-bottom: 1px solid #ccc;
+        cursor: pointer;
+        transition: all 0.4s ease;
+      }
+      .accordion > .menu-container:last-child > .menu {
+        border-bottom: 0;
+      }
+      .accordion > .menu-container > .menu > i {
+        position: absolute;
+        top: 1.2rem;
+        left: 1rem;
+        color: #595959;
+        transition: all 0.4s ease;
+        /* https://developer.mozilla.org/ko/docs/Web/CSS/pointer-events
+          pointer-events에 none을 지정하면 해당 요소에서 클릭, 드래그, 호버와 같은 포인터 이벤트가 발생하지 않는다. */
+        /* pointer-events: none; */
+      }
+      .accordion > .menu-container.active > .menu > i {
+        transform: rotate(180deg);
+      }
+      .accordion > .menu-container.active > .menu,
+      .accordion > .menu-container.active > .menu > i {
+        color: #b63b4d;
+      }
+      /* Show submenu */
+      .accordion > .menu-container.active > .submenu {
+        /*
+        height: 0 -> height: auto;는 transition이 동작하지 않는다.
+        max-height: 임의의 높이;를 지정하면 transition이 동작하지만 타이밍이 망가진다.
+        max-height: 1000px;과 max-height: 133px;을 비교해 보라!
+        height를 1000px으로 transition할 시간에 실제로는 133px정도만 transition하므로 여는 시간이 닫는 시간보다 빠르다.
+        */
+        /* max-height: 1000px; */
+        /* max-height: 133px; */
+      }
+      .accordion > .menu-container > .submenu {
+        height: 0;
+        overflow: hidden;
+        background: #444359;
+        font-size: 14px;
+        transition: height 0.4s ease;
+      }
+      .accordion > .menu-container > .submenu > div {
+        border-bottom: 1px solid #4b4a5e;
+      }
+      .accordion > .menu-container:last-child > .submenu {
+        border-radius: 0 0 4px 4px;
+      }
+      .accordion > .menu-container:last-child > .submenu > div:last-child {
+        border-bottom: 0;
+      }
+      .accordion > .menu-container > .submenu > div > a {
+        display: block;
+        text-decoration: none;
+        color: #d9d9d9;
+        padding: 12px;
+        padding-left: 42px;
+        transition: all 0.25s ease-in-out;
+      }
+      .accordion > .menu-container > .submenu > div > a:hover {
+        background: #b63b4d;
+        color: #fff;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1 class="title">Accordion</h1>
+    <div class="accordion">
+      <div class="menu-container active">
+        <div class="menu"><i class="bx bxs-chevron-down"></i>Front-end</div>
+        <div class="submenu">
+          <div><a href="#">HTML</a></div>
+          <div><a href="#">CSS</a></div>
+          <div><a href="#">Javascript</a></div>
+        </div>
+      </div>
+      <div class="menu-container">
+        <div class="menu">
+          <i class="bx bxs-chevron-down"></i>Responsive web
+        </div>
+        <div class="submenu">
+          <div><a href="#">Tablets</a></div>
+          <div><a href="#">Mobiles</a></div>
+          <div><a href="#">Desktop</a></div>
+        </div>
+      </div>
+      <div class="menu-container">
+        <div class="menu"><i class="bx bxs-chevron-down"></i>Web Browser</div>
+        <div class="submenu">
+          <div><a href="#">Chrome</a></div>
+          <div><a href="#">Firefox</a></div>
+          <div><a href="#">Safari</a></div>
+        </div>
+      </div>
+    </div>
+    <script src="./app.js"></script>
+  </body>
+</html>
