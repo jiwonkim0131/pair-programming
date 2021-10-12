@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Popup</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400"
+      rel="stylesheet"
+    />
+    <link
+      href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      *,
+      *::after,
+      *::before {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: 'Open Sans';
+        font-weight: 300;
+      }
+      .title {
+        color: #db5b33;
+        font-weight: 300;
+        text-align: center;
+      }
+
+      .modal-wrap {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+      }
+
+      .modal-wrap.active {
+        display: block;
+      }
+
+      .modal {
+        position: absolute;
+        top: 20%;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100%;
+        max-width: 520px;
+        min-height: 200px;
+        background-color: #fff;
+        padding: 30px 20px;
+        border-radius: 10px;
+        box-shadow: 3px 3px 8px 0 rgba(0, 0, 0, 0.5);
+      }
+
+      .modal-title {
+        margin-top: 0;
+        text-align: center;
+        color: #db5b33;
+      }
+
+      .modal-close {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        border: 0;
+        background: transparent;
+        cursor: pointer;
+        padding: 5px;
+        font-size: 18px;
+      }
+
+      /* 팝업을 위한 CSS */
+    </style>
+  </head>
+  <body>
+    <h1 class="title">Popup</h1>
+    <button class="toggle-popup">toggle popup</button>
+
+    <div class="modal-wrap close">
+      <div class="modal">
+        <h2 class="modal-title">Hello!</h2>
+        <p class="modal-content">
+          야무와, 한글 로렘입숨. 않을뿐더러 언제 사슬을 마을은 구름처럼 늦은
+          비치어, 성이 싸여 있었다. 섬들은, 걸려 서서 섬마다 마을로 조차
+          저녁에야 너머로 통하는, 오랫동안 듯싶었다.? 하늘에 스스로의 깎아내고
+          희멀건 꽃피는 걸려? 그뭄달빛은?
+        </p>
+        <form>
+          <label><input type="text" /></label>
+          <button class="modal-submit">OK</button>
+          <button class="modal-cancle close">Cancel</button>
+        </form>
+        <button class="modal-close close">X</button>
+      </div>
+    </div>
+    <p class="popup-message"></p>
+    <script src="./app.js"></script>
+  </body>
+</html>
