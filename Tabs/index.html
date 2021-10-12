@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Tabs</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400"
+      rel="stylesheet"
+    />
+    <style>
+      *,
+      *:after,
+      *:before {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: 'Open Sans';
+        font-weight: 300;
+        background-color: #d6e1e5;
+      }
+      .title {
+        color: #db5b33;
+        font-weight: 300;
+        text-align: center;
+      }
+      .tabs {
+        --tab-width: 200;
+        --tabs-length: 0;
+        width: calc(var(--tab-width) * var(--tabs-length) * 1px);
+        margin: 0 auto;
+        box-shadow: 0 7px 8px -4px rgba(0, 0, 0, 0.2),
+          0 13px 19px 2px rgba(0, 0, 0, 0.14),
+          0 5px 24px 4px rgba(0, 0, 0, 0.12);
+        border-radius: 5px;
+        overflow: hidden;
+      }
+      .tabs > nav {
+        display: flex;
+        position: relative;
+        background-color: #f2f2f2;
+      }
+      .tab {
+        width: calc(var(--tab-width) * 1px);
+        height: 60px;
+        line-height: 60px;
+        text-align: center;
+        cursor: pointer;
+        transition: color 0.15s ease-in;
+        z-index: 1000;
+      }
+      .glider {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 60px;
+        width: calc(var(--tab-width) * 1px);
+        background-color: #fff;
+        transition: 0.25s ease-out;
+      }
+      .tab-content {
+        min-height: 300px;
+        line-height: 2.5;
+        background-color: #fff;
+        padding: 20px;
+        display: none;
+      }
+      .tab-content.active {
+        display: block;
+      }
+      .spinner {
+        position: fixed;
+        top: 20%;
+        left: 50%;
+        transform: translate3D(-50%, 0, 0);
+        width: 50px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 class="title">Tabs</h1>
+    <div class="tabs">
+      <!-- <nav>
+        <div class="tab" data-index="0">HTML</div>
+        <div class="tab" data-index="1">CSS</div>
+        <div class="tab" data-index="2">JavaScript</div>
+        <span class="glider"></span>
+      </nav>
+      <div class="tab-content active">
+        HTML(HyperText Markup Language) is the most basic building block of the Web. It describes and defines
+        the content of a webpage along with the basic layout of the webpage. Other technologies besides HTML
+        are generally used to describe a web page's appearance/presentation(CSS) or functionality/
+        behavior(JavaScript).
+      </div>
+      <div class="tab-content">
+        Cascading Style Sheets(CSS) is a stylesheet language used to describe the presentation of a document
+        written in HTML or XML (including XML dialects such as SVG, MathML or XHTML). CSS describes how
+        elements should be rendered on screen, on paper, in speech, or on other media.
+      </div>
+      <div class="tab-content">
+        JavaScript(JS) is a lightweight interpreted or JIT-compiled programming language with first-class
+        functions. While it is most well-known as the scripting language for Web pages, many non-browser
+        environments also use it, such as Node.js, Apache CouchDB and Adobe Acrobat. JavaScript is a
+        prototype-based, multi-paradigm, dynamic language, supporting object-oriented, imperative, and
+        declarative (e.g. functional programming) styles.
+      </div> -->
+    </div>
+    <img class="spinner" src="img/ball-triangle.svg" alt="Loading..." />
+    <script src="./app.js"></script>
+  </body>
+</html>
