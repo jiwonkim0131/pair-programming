@@ -40,28 +40,34 @@ $leftButton.onclick = () => {
 
 $laps.style.display = 'none';
 
-const lapList = [];
+let lapList = [];
 $rightButton.onclick = () => {
   if ($rightButton.firstChild.nodeValue === 'Reset') {
     $display.textContent = `00:00:00`;
     $rightButton.disabled = true;
     [min, sec, mm] = [0, 0, 0];
+    $laps.style.display = 'none';
+
+    while ($laps.children.length > 2) {
+      $laps.removeChild($laps.lastElementChild);
+    }
+
+    lapList = [];
   } else {
     $laps.style.display = 'grid';
     lapList.push($display.firstChild.nodeValue);
     const $fragment = document.createDocumentFragment();
-    lapList.forEach((list, idx) => {
-      const $lap = document.createElement('div');
-      const lapTime = document.createTextNode(list);
-      const $order = document.createElement('div');
-      const orderNum = document.createTextNode(idx + 1);
 
-      $lap.appendChild(lapTime);
-      $order.appendChild(orderNum);
+    const $lap = document.createElement('div');
+    const lapTime = document.createTextNode(lapList[lapList.length - 1]);
+    const $order = document.createElement('div');
+    const orderNum = document.createTextNode(lapList.length);
 
-      $fragment.appendChild($lap);
-      $fragment.appendChild($order);
-    });
+    $order.appendChild(orderNum);
+    $lap.appendChild(lapTime);
+
+    $fragment.appendChild($order);
+    $fragment.appendChild($lap);
     $laps.appendChild($fragment);
   }
 };
