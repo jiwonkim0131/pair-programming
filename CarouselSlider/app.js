@@ -50,6 +50,7 @@ $carousel.onclick = e => {
 
   if (e.target.classList.contains('prev')) {
     currentSlide -= 1;
+    $currentSlides.style.setProperty('--duration', 500);
     if (!currentSlide) {
       setTimeout(() => {
         $currentSlides.style.setProperty('--duration', 0);
@@ -60,12 +61,12 @@ $carousel.onclick = e => {
         currentSlide = $currentSlides.children.length - 2;
       }, $currentSlides.style.getPropertyValue('--duration'));
     }
-    $currentSlides.style.setProperty('--duration', 500);
     $currentSlides.style.setProperty('--currentSlide', currentSlide);
   }
 
   if (e.target.classList.contains('next')) {
     currentSlide += 1;
+    $currentSlides.style.setProperty('--duration', 500);
     if (currentSlide === $currentSlides.children.length - 1) {
       setTimeout(() => {
         $currentSlides.style.setProperty('--duration', 0);
@@ -74,6 +75,5 @@ $carousel.onclick = e => {
       }, $currentSlides.style.getPropertyValue('--duration'));
     }
     $currentSlides.style.setProperty('--currentSlide', currentSlide);
-    $currentSlides.style.setProperty('--duration', 500);
   }
 };
