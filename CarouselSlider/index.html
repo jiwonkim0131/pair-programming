@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans:300,400"
+      rel="stylesheet"
+    />
+    <title>Carousel Slider</title>
+    <style>
+      *,
+      *::after,
+      *::before {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: 'Open Sans';
+        font-weight: 300;
+        color: #58666e;
+        background-color: #f0f3f4;
+      }
+      .title {
+        color: #db5b33;
+        font-weight: 300;
+        text-align: center;
+      }
+      /* 캐러셀의 window 역할을 한다. */
+      .carousel {
+        position: relative;
+        margin: 0 auto;
+        overflow: hidden;
+        /* carousel 요소의 width 셋팅이 완료될 때까지 감춘다. */
+        opacity: ;
+      }
+      .carousel-slides {
+        --currentSlide: 0;
+        --duration: 0;
+        /* 수평 정렬 */
+        display: flex;
+        transition: transform calc(var(--duration) * 1ms) ease-out;
+        transform: translate3D(calc(var(--currentSlide) * -100%), 0, 0);
+      }
+      .carousel-slides img {
+        padding: 5px;
+      }
+      /* carousel의 prev, next 버튼 */
+      .carousel-control {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 2em;
+        color: #fff;
+        background-color: transparent;
+        border-color: transparent;
+        cursor: pointer;
+        z-index: 99;
+      }
+      .carousel-control:focus {
+        outline: none;
+      }
+      /* carousel의 prev 버튼 */
+      .carousel-control.prev {
+        left: 0;
+      }
+      /* carousel의 next 버튼 */
+      .carousel-control.next {
+        right: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 class="title">Carousel Slider</h1>
+    <div class="carousel">
+      <!-- <div class="carousel-slides">
+        <img src="movies/movie-4.jpg">
+        <img src="movies/movie-1.jpg">
+        <img src="movies/movie-2.jpg">
+        <img src="movies/movie-3.jpg">
+        <img src="movies/movie-4.jpg">
+        <img src="movies/movie-1.jpg">
+      </div>
+      <button class="carousel-control prev">&laquo;</button>
+      <button class="carousel-control next">&raquo;</button> -->
+    </div>
+    <script src="./app.js"></script>
+  </body>
+</html>
