@@ -1,0 +1,82 @@
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Open Sans';
+  font-weight: 300;
+  color: #58666e;
+  background-color: #f0f3f4;
+}
+
+/* .title {
+  color: #db5b33;
+  font-weight: 300;
+  text-align: center;
+} */
+
+.toast {
+  --toast-width: 350px;
+  --toast-height: 100px;
+
+  position: absolute;
+  right: 0;
+  width: var(--toast-width);
+  height: var(--toast-height);
+  padding: 10px 15px;
+  margin: 10px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  animation: move 0.8s both;
+}
+
+.toast-heading {
+  margin: 10px 0 15px;
+}
+
+.toast-message {
+  display: flex;
+  align-items: center;
+  height: 20px;
+}
+
+.toast-message > p {
+  margin-left: 10px;
+}
+
+.toast-success {
+  color: #155724;
+  background-color: #d4edda;
+  border-color: #c3e6cb;
+}
+
+.toast-error {
+  color: #721c24;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+}
+
+.toast-warning {
+  color: #856404;
+  background-color: #fff3cd;
+  border-color: #ffeeba;
+}
+
+.close {
+  position: absolute;
+  top: 7px;
+  right: 10px;
+  font-size: 1.5em;
+  cursor: pointer;
+}
+
+@keyframes move {
+  from {
+    transform: translate3d(100%, 0, 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
