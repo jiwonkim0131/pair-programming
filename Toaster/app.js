@@ -4,11 +4,13 @@ const toaster = {
   add(callback) {
     const $toast = document.createElement('div');
     $toast.classList.add('toast', 'toast-' + callback.type);
-
     $body.appendChild($toast);
+    $body.style.overflowX = 'hidden';
+
+    const $toastList = document.querySelectorAll('.toast');
 
     $toast.innerHTML = `
-      <h4 class="toast-heading">${callback.title}</h4>
+      <h4 class="toast-heading">${callback.title} ${$toastList.length - 1}</h4>
       <div class="toast-message">
         <svg width="24" height="24">
           <use xlink:href="#${callback.type}" />
@@ -17,6 +19,12 @@ const toaster = {
       </div>
       <a class="close">&times;</a>
     `;
+
+    const height = $toast.offsetHeight;
+
+    [...$toastList].reverse().forEach((toast, idx) => {
+      toast.style.bottom = `${idx * height}px`;
+    });
 
     setTimeout(() => $toast.remove(), 3000);
   }
