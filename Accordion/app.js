@@ -4,11 +4,13 @@ const $menuContainers = document.querySelectorAll('.menu-container');
 
 const fetchAccordion = () => {
   $menuContainerActive.lastElementChild.style.height = `${$menuContainerActive.lastElementChild.scrollHeight}px`;
+  $menuContainerActive.lastElementChild.style.transition = 'none';
 };
 
 $accordion.onclick = e => {
   if (!e.target.classList.contains('menu')) return;
-  //   active = !active;
+
+  $menuContainerActive.lastElementChild.style.removeProperty('transition');
 
   [...$menuContainers].forEach(v => {
     v.classList.toggle('active', v.firstElementChild === e.target);
