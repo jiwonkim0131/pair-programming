@@ -24,9 +24,6 @@ $scrollIcon.onclick = () => {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 };
 
-window.addEventListener(
-  'scroll',
-  throttle(() => {
-    gotoTop();
-  }, 100)
-);
+window.onscroll = throttle(() => {
+  gotoTop();
+}, 100);
