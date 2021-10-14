@@ -1,3 +1,4 @@
+const $body = document.querySelector('body');
 const $calendar = document.querySelector('.calendar');
 const $datePicker = document.querySelector('.date-picker');
 const DAYS = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
@@ -199,4 +200,14 @@ $calendar.onclick = e => {
 
 $datePicker.onclick = () => {
   $calendar.classList.add('active');
+};
+
+$body.onclick = e => {
+  if (
+    e.target.classList.contains('date-picker') ||
+    e.target.matches('.calendar *') ||
+    e.target.matches('.nav-button')
+  )
+    return;
+  $calendar.classList.remove('active');
 };
