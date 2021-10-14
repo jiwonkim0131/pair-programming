@@ -1,11 +1,9 @@
-// toggle side nav
+// 01. toggle side nav
 
 // DOM Nodes
 const $nav = document.querySelector('nav');
 const $main = document.querySelector('main');
 const $toggleButton = document.querySelector('i.toggle');
-
-const toggleClass = $node => $node.classList.toggle('active');
 
 // state function
 const fetchNav = () => {
@@ -23,7 +21,7 @@ const fetchNav = () => {
 window.addEventListener('DOMContentLoaded', fetchNav);
 
 $toggleButton.onclick = () => {
-  toggleClass($nav);
+  $nav.classList.toggle('active');
   $nav.classList.remove('notransition');
   $main.classList.remove('notransition');
   $toggleButton.classList.remove('notransition');
