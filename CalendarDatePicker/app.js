@@ -10,24 +10,34 @@ const currentDate = (() => {
   return { year, month, date };
 })();
 
+// today 함수
+const isToday = date => date === currentDate.date;
+
 // 요일 구하기
-const getDay = (year, month) => new Date(year, month, 1).getDay();
+const getDayNum = (year, month) => new Date(year, month, 1).getDay();
 
 // 말일 구하기
 const getLastDate = (year, month) => new Date(year, month + 1, 0).getDate();
+
+// 말일의 요일 구하기
+const getLasetDayofMonth = (year, month) =>
+  new Date(year, month + 1, 0).getDay();
 
 // 이전달, 이번달, 다음달 렌더링 할 배열 구하기
 const getAllDates = currentDate => {
   const { year, month } = currentDate; // 기준
 
   // 이번달 1일의 요일
-  const firstDayofThisMonth = getDay(year, month);
+  const firstDayofThisMonth = getDayNum(year, month);
 
   // 지난달의 말일
   const lastDateofLastMonth = getLastDate(year, month - 1);
 
   // 이번달의 말일
   const lastDateofThisMonth = getLastDate(year, month);
+
+  // 이번달 말일의 요일
+  const lastDayofThisMonth = getLasetDayofMonth(year, month);
 
   // 지난 달 날짜 배열 구하기
   const lastMonthDays = Array.from(
@@ -43,7 +53,7 @@ const getAllDates = currentDate => {
 
   // 다음 날 시작 날짜 배열 구하기
   const nextMonthDays = Array.from(
-    { length: 6 - lastDateofThisMonth },
+    { length: 6 - lastDayofThisMonth },
     (_, i) => i + 1
   );
 
@@ -83,7 +93,9 @@ const render = () => {
 
   currentMonthDays.forEach(thisDay => {
     const $thisDay = document.createElement('div');
-    $thisDay.classList.add('date');
+    isToday(thisDay)
+      ? $thisDay.classList.add('date', 'today')
+      : $thisDay.classList.add('date');
     $thisDay.textContent = thisDay;
     $fragment.append($thisDay);
   });
@@ -101,3 +113,18 @@ const render = () => {
 };
 
 render();
+
+let selected = 0;
+// select 이벤트
+$calendar.onclick = e => {
+  if (
+    !e.target.classList.contains('date') ||
+    e.target.classList.contains('disable')
+  )
+    return;
+  [...$calendar.querySelectorAll('.date')].forEach($el =>
+    $el.classList.toggle('selected', $el === e.target)
+  );
+
+  selected = e.target.textContent;
+};
