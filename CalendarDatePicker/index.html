@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calendar</title>
+    <!-- 원하는 폰트와 아이콘을 사용해도 좋다. -->
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans:300,400"
+      rel="stylesheet"
+    />
+    <link
+      href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --theme-color: #03c04a;
+        --calender-size: 300px;
+        --cell-size: calc(((var(--calender-size) - 1em) / 7));
+      }
+
+      *,
+      *::after,
+      *::before {
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: 'Open Sans';
+        font-weight: 300;
+      }
+
+      .title {
+        color: #db5b33;
+        font-weight: 300;
+        text-align: center;
+      }
+
+      .date-picker {
+        display: block;
+        width: 184px;
+        margin: 0 auto;
+        padding: 10px;
+        border: #ccc 1px solid;
+        border-radius: 4px;
+      }
+
+      .calendar {
+        display: none;
+        position: absolute;
+        top: 135px;
+        left: 50%;
+        transform: translateX(-92px);
+        width: var(--calender-size);
+        font-size: calc(var(--calender-size) * 0.046);
+        text-align: center;
+        border-radius: 15px;
+        box-shadow: 4px 8px 20px rgba(0, 0, 0, 0.2);
+        overflow: hidden;
+      }
+
+      .calendar.active {
+        display: block;
+      }
+
+      .calendar-nav {
+        display: flex;
+        justify-content: space-between;
+        padding: 1em;
+        color: #fff;
+        background-color: var(--theme-color);
+      }
+
+      .nav-button {
+        cursor: pointer;
+        border: none;
+        color: inherit;
+        background: transparent;
+      }
+
+      .calendar-nav p {
+        font-weight: 400;
+        padding: 0;
+        margin: 0;
+      }
+
+      .calendar-nav p.title-month {
+        font-size: 1.4em;
+      }
+
+      .calendar-nav p.title-year {
+        font-size: 0.8em;
+      }
+
+      .calendar-grid {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        padding: 0.5em;
+      }
+
+      .calendar-grid div {
+        height: var(--cell-size);
+        line-height: var(--cell-size);
+      }
+
+      .date {
+        cursor: pointer;
+        border-radius: 50%;
+        transition: all 0.2s;
+      }
+
+      .date:hover {
+        background-color: var(--theme-color);
+        color: #fff;
+      }
+
+      .date:nth-child(7n + 1):not(.disable) {
+        color: #f00;
+      }
+
+      .date:nth-child(7n + 1):not(.disable):hover {
+        color: #fff;
+      }
+
+      .date.today {
+        border: 1px solid var(--theme-color);
+      }
+
+      .date.selected {
+        color: #fff;
+        background-color: var(--theme-color);
+      }
+
+      .day,
+      .disable {
+        color: #aaa;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 class="title">Calender</h1>
+    <input type="text" class="date-picker" placeholder="Select date" readonly />
+    <div class="calendar">
+      <section class="calendar-nav">
+        <button type="button" class="nav-button prev">◀</button>
+        <div class="calendar-title">
+          <p class="title-month">OCT</p>
+          <p class="title-year">2021</p>
+        </div>
+        <button type="button" class="nav-button next">▶</button>
+      </section>
+      <section class="calendar-grid">
+        <div class="day">SUN</div>
+        <div class="day">MON</div>
+        <div class="day">TUE</div>
+        <div class="day">WED</div>
+        <div class="day">THU</div>
+        <div class="day">FRI</div>
+        <div class="day">SAT</div>
+        <div class="date disable">26</div>
+        <div class="date disable">27</div>
+        <div class="date disable">28</div>
+        <div class="date disable">29</div>
+        <div class="date disable">30</div>
+        <div class="date">1</div>
+        <div class="date">2</div>
+        <div class="date">3</div>
+        <div class="date">4</div>
+        <div class="date">5</div>
+        <div class="date">6</div>
+        <div class="date">7</div>
+        <div class="date">8</div>
+        <div class="date selected">9</div>
+        <div class="date">10</div>
+        <div class="date">11</div>
+        <div class="date">12</div>
+        <div class="date today">13</div>
+        <div class="date">14</div>
+        <div class="date">15</div>
+        <div class="date">16</div>
+        <div class="date">17</div>
+        <div class="date">18</div>
+        <div class="date">19</div>
+        <div class="date">20</div>
+        <div class="date">21</div>
+        <div class="date">22</div>
+        <div class="date">23</div>
+        <div class="date">24</div>
+        <div class="date">25</div>
+        <div class="date">26</div>
+        <div class="date">27</div>
+        <div class="date">28</div>
+        <div class="date">29</div>
+        <div class="date">30</div>
+        <div class="date">31</div>
+        <div class="date disable">1</div>
+        <div class="date disable">2</div>
+        <div class="date disable">3</div>
+        <div class="date disable">4</div>
+        <div class="date disable">5</div>
+        <div class="date disable">6</div>
+      </section>
+    </div>
+    <script src="./app.js"></script>
+  </body>
+</html>
