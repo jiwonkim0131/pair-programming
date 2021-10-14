@@ -1,3 +1,4 @@
+const $body = document.querySelector('body');
 const $calendar = document.querySelector('.calendar');
 const $datePicker = document.querySelector('.date-picker');
 const DAYS = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
@@ -38,7 +39,8 @@ const updateNowDate = (year, month, selected = 0) => {
 };
 
 // today 함수
-const isToday = date => date === currentDate.date;
+const isToday = date =>
+  date === currentDate.date && currentDate.month === nowDate.month;
 
 // 요일 구하기
 const getDayNum = (year, month) => new Date(year, month, 1).getDay();
@@ -134,7 +136,6 @@ const render = () => {
       : $thisDay.classList.add('date');
     $thisDay.textContent = thisDay;
     if (thisDay === nowDate.nowSelected) {
-      console.log(nowDate.nowSelected);
       $thisDay.classList.add('selected');
     }
     $fragment.append($thisDay);
@@ -172,26 +173,41 @@ $calendar.onclick = e => {
     updateNowDate(year, month, date);
 
     $datePicker.value = getFormattedDate(new Date(year, month, date));
+    $calendar.classList.remove('active');
   }
 
   if (e.target.classList.contains('nav-button')) {
     $calendar.innerHTML = '';
+
     if (e.target.classList.contains('prev')) {
       nowDate.month === 0
         ? updateNowDate(nowDate.year - 1, 11, nowDate.nowSelected)
         : updateNowDate(nowDate.year, nowDate.month - 1, nowDate.nowSelected);
-      $datePicker.value = getFormattedDate(
-        new Date(nowDate.year, nowDate.month, nowDate.nowSelected)
-      );
-      render();
     } else {
       nowDate.month === 11
         ? updateNowDate(nowDate.year + 1, 0, nowDate.nowSelected)
         : updateNowDate(nowDate.year, nowDate.month + 1, nowDate.nowSelected);
+    }
+
+    if (nowDate.nowSelected)
       $datePicker.value = getFormattedDate(
         new Date(nowDate.year, nowDate.month, nowDate.nowSelected)
       );
-      render();
-    }
+
+    render();
   }
+};
+
+$datePicker.onclick = () => {
+  $calendar.classList.add('active');
+};
+
+$body.onclick = e => {
+  if (
+    e.target.classList.contains('date-picker') ||
+    e.target.matches('.calendar *') ||
+    e.target.matches('.nav-button')
+  )
+    return;
+  $calendar.classList.remove('active');
 };
