@@ -1,10 +1,9 @@
 (function printNow() {
-  const $handHour = document.querySelector('.clock > .hand.hour');
-  const $handMinute = document.querySelector('.clock > .hand.minute');
-  const $handSecond = document.querySelector('.clock > .hand.second');
+  const $handHour = document.querySelector('.hand.hour');
+  const $handMinute = document.querySelector('.hand.minute');
+  const $handSecond = document.querySelector('.hand.second');
 
-  const currentTime = new Date();
-
+  const currentTime = 
   const getCurrentHour = (hour, min) => {
     hour %= 12;
     hour = hour || 12;
@@ -17,11 +16,7 @@
   (function () {
     $handHour.style.setProperty(
       '--deg',
-      getCurrentHour(
-        currentTime.getHours(),
-        currentTime.getMinutes(),
-        currentTime.getSeconds()
-      )
+      getCurrentHour(currentTime.getHours(), currentTime.getMinutes())
     );
 
     $handMinute.style.setProperty(
