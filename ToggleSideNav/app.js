@@ -7,13 +7,11 @@ const $toggleButton = document.querySelector('.toggle');
 
 // state function
 const fetchNav = () => {
-  if (localStorage.getItem('navState') === 'true') {
+  if (JSON.parse(localStorage.getItem('navState'))) {
     $nav.classList.add('active');
     [$nav, $main, $toggleButton].forEach($el =>
       $el.classList.add('notransition')
     );
-  } else {
-    localStorage.setItem('navState', 'false');
   }
 };
 
@@ -26,7 +24,5 @@ $toggleButton.onclick = () => {
     $el.classList.remove('notransition')
   );
 
-  $nav.classList.contains('active')
-    ? localStorage.setItem('navState', 'true')
-    : localStorage.setItem('navState', 'false');
+  localStorage.navState = !!$nav.classList.contains('active');
 };
