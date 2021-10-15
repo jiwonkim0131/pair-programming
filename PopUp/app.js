@@ -2,7 +2,6 @@ const $togglePopUp = document.querySelector('.toggle-popup');
 const $modalWrap = document.querySelector('.modal-wrap');
 const $form = document.querySelector('form');
 const $input = document.querySelector('input');
-
 const $popupMessage = document.querySelector('.popup-message');
 
 $togglePopUp.onclick = () => {
