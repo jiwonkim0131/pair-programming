@@ -1,33 +1,36 @@
 const $spinner = document.querySelector('.spinner');
 const $tabs = document.querySelector('.tabs');
 
-const render = v => {
-  $tabs.style.setProperty('--tabs-length', v.length);
+const render = tabItems => {
+  $tabs.style.setProperty('--tabs-length', tabItems.length);
   $spinner.style.display = 'none';
   const $nav = document.createElement('nav');
+  const $fragmentNav = document.createDocumentFragment();
 
-  $tabs.appendChild($nav);
-
-  v.forEach(({ title }, idx) => {
+  tabItems.forEach(({ title }, idx) => {
     const $tabTitle = document.createElement('div');
     $tabTitle.classList.add('tab');
     $tabTitle.setAttribute('data-index', idx);
-    const textNode = document.createTextNode(title);
-    $tabTitle.appendChild(textNode);
-    $nav.appendChild($tabTitle);
+    $tabTitle.textContent = `${title}`;
+    $fragmentNav.appendChild($tabTitle);
   });
+
   const $glider = document.createElement('span');
   $glider.classList.add('glider');
-  $nav.appendChild($glider);
+  $fragmentNav.appendChild($glider);
 
-  v.forEach(({ content }, idx) => {
+  $nav.appendChild($fragmentNav);
+  $tabs.appendChild($nav);
+
+  const $fragmentContent = document.createDocumentFragment();
+  tabItems.forEach(({ content }, idx) => {
     const $tabContent = document.createElement('div');
     $tabContent.classList.add('tab-content');
-    const textNode = document.createTextNode(content);
-    $tabContent.appendChild(textNode);
-    $tabs.appendChild($tabContent);
-    if (!idx) $tabContent.classList.add('active');
+    $tabContent.textContent = `${content}`;
+    $fragmentContent.appendChild($tabContent);
+    if (idx === 0) $tabContent.classList.add('active');
   });
+  $tabs.appendChild($fragmentContent);
 };
 
 const fetchTabsData = () =>
@@ -50,7 +53,7 @@ const fetchTabsData = () =>
         ]),
       1000
     );
-  }).then(v => render(v));
+  }).then(tabItems => render(tabItems));
 
 window.addEventListener('DOMContentLoaded', fetchTabsData);
 
@@ -60,10 +63,12 @@ $tabs.onclick = e => {
   const $tabContent = document.querySelectorAll('.tab-content');
   const $glider = document.querySelector('.glider');
 
-  [...$tabContent].map((v, idx) =>
-    v.classList.toggle('active', +e.target.dataset.index === idx)
+  [...$tabContent].map((content, idx) =>
+    content.classList.toggle('active', +e.target.dataset.index === idx)
   );
 
-  const tabWidth = getComputedStyle($tabs).getPropertyValue('--tab-width');
-  $glider.style.left = `${tabWidth * e.target.dataset.index}px`;
+  $glider.style.left = `${
+    getComputedStyle($tabs).getPropertyValue('--tab-width') *
+    e.target.dataset.index
+  }px`;
 };
