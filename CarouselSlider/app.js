@@ -3,11 +3,11 @@ const $carousel = document.querySelector('.carousel');
 const carousel = ($container, images) => {
   const $carouselSlides = document.createElement('div');
   $carouselSlides.classList.add('carousel-slides');
-  $container.appendChild($carouselSlides);
+  $carouselSlides.style.setProperty('--currentSlide', 1);
   $carouselSlides.innerHTML = images
     .map(img => `<img src="${img}" style='width : 100%'>`)
     .join('');
-  $carouselSlides.style.setProperty('--currentSlide', 1);
+  $container.appendChild($carouselSlides);
 };
 
 carousel($carousel, [
@@ -19,61 +19,60 @@ carousel($carousel, [
   'movies/movie-1.jpg'
 ]);
 
-const imageWidth = document.querySelector('img').naturalWidth;
-$carousel.style.maxWidth = `${imageWidth}px`;
-
-const $fragment = document.createDocumentFragment();
-
+const $currentSlides = document.querySelector('.carousel-slides');
+const $buttonFragment = document.createDocumentFragment();
 const buttonObj = [
   { key: 'prev', val: '&laquo' },
   { key: 'next', val: '&raquo' }
 ];
 
+let currentSlide =
+  getComputedStyle($currentSlides).getPropertyValue('--currentSlide') * 1;
+let transitionState = false;
+
 buttonObj.forEach(({ key, val }) => {
   const $carouselControl = document.createElement('button');
   $carouselControl.classList.add('carousel-control', key);
   $carouselControl.innerHTML = val;
-  $fragment.appendChild($carouselControl);
+  $buttonFragment.appendChild($carouselControl);
 });
 
-$carousel.appendChild($fragment);
+$carousel.appendChild($buttonFragment);
 
-const $currentSlides = document.querySelector('.carousel-slides');
-
-let currentSlide =
-  getComputedStyle($currentSlides).getPropertyValue('--currentSlide') * 1;
-
-$currentSlides.style.setProperty('--duration', 500);
+window.onload = () => {
+  const imageWidth = document.querySelector('img').scrollWidth;
+  $carousel.style.maxWidth = `${imageWidth}px`;
+  $carousel.style.opacity = 1;
+};
 
 $carousel.onclick = e => {
+  if (transitionState) return;
   if (!e.target.classList.contains('carousel-control')) return;
+  transitionState = true;
 
-  if (e.target.classList.contains('prev')) {
-    currentSlide -= 1;
-    $currentSlides.style.setProperty('--duration', 500);
-    if (!currentSlide) {
-      setTimeout(() => {
-        $currentSlides.style.setProperty('--duration', 0);
-        $currentSlides.style.setProperty(
-          '--currentSlide',
-          $currentSlides.children.length - 2
-        );
-        currentSlide = $currentSlides.children.length - 2;
-      }, $currentSlides.style.getPropertyValue('--duration'));
-    }
-    $currentSlides.style.setProperty('--currentSlide', currentSlide);
+  e.target.classList.contains('prev')
+    ? (currentSlide -= 1)
+    : (currentSlide += 1);
+
+  $currentSlides.style.setProperty('--duration', 500);
+  $currentSlides.style.setProperty('--currentSlide', currentSlide);
+};
+
+$carousel.ontransitionend = () => {
+  transitionState = false;
+
+  $currentSlides.style.setProperty('--duration', 0);
+
+  if (!currentSlide) {
+    $currentSlides.style.setProperty(
+      '--currentSlide',
+      $currentSlides.children.length - 2
+    );
+    currentSlide = $currentSlides.children.length - 2;
   }
 
-  if (e.target.classList.contains('next')) {
-    currentSlide += 1;
-    $currentSlides.style.setProperty('--duration', 500);
-    if (currentSlide === $currentSlides.children.length - 1) {
-      setTimeout(() => {
-        $currentSlides.style.setProperty('--duration', 0);
-        $currentSlides.style.setProperty('--currentSlide', 1);
-        currentSlide = 1;
-      }, $currentSlides.style.getPropertyValue('--duration'));
-    }
-    $currentSlides.style.setProperty('--currentSlide', currentSlide);
+  if (currentSlide === $currentSlides.children.length - 1) {
+    $currentSlides.style.setProperty('--currentSlide', 1);
+    currentSlide = 1;
   }
 };
