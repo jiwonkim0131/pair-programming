@@ -1,6 +1,6 @@
+const $body = document.querySelector('body');
 const $toggleButton = document.querySelector('.toggle-button');
 
-window.addEventListener('DOMContentLoaded', fetchTheme);
 $toggleButton.onclick = () => {
   $body.classList.toggle('dark');
   $body.classList.contains('dark')
