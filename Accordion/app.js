@@ -7,17 +7,21 @@ const fetchAccordion = () => {
   $menuContainerActive.lastElementChild.style.transition = 'none';
 };
 
+window.addEventListener('DOMContentLoaded', fetchAccordion);
+
 $accordion.onclick = e => {
   if (!e.target.classList.contains('menu')) return;
 
   $menuContainerActive.lastElementChild.style.removeProperty('transition');
 
-  [...$menuContainers].forEach(v => {
-    v.classList.toggle('active', v.firstElementChild === e.target);
-    v.lastElementChild.style.height = v.classList.contains('active')
-      ? `${v.lastElementChild.scrollHeight}px`
-      : '0';
+  [...$menuContainers].forEach(menuContainer => {
+    menuContainer.classList.toggle(
+      'active',
+      menuContainer.firstElementChild === e.target
+    );
+    menuContainer.lastElementChild.style.height =
+      menuContainer.classList.contains('active')
+        ? `${menuContainer.lastElementChild.scrollHeight}px`
+        : '0';
   });
 };
-
-window.addEventListener('DOMContentLoaded', fetchAccordion);
