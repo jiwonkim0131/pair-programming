@@ -2,7 +2,6 @@ import { toaster, createToastAction } from './toast.js';
 
 const $signinForm = document.querySelector('.form.signin');
 const $signupForm = document.querySelector('.form.signup');
-const $signupPassword = document.getElementById('signup-password');
 const $signinLink = document.querySelector('.form.signup .link>a');
 const $signupLink = document.querySelector('.form.signin .link>a');
 
@@ -33,7 +32,7 @@ const isSubmit = allInputOfForm =>
   [...allInputOfForm].every(inputType => inputStatus[inputType.name].status);
 
 const isSamePassword = confirmPassword =>
-  confirmPassword === $signupPassword.value;
+  confirmPassword === document.getElementById('signup-password').value;
 
 [$signinForm, $signupForm].forEach($form => {
   const allInputOfForm = $form.querySelectorAll('input');
