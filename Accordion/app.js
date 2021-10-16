@@ -1,6 +1,5 @@
 const $accordion = document.querySelector('.accordion');
 const $menuContainerActive = document.querySelector('.menu-container.active');
-const $menuContainers = document.querySelectorAll('.menu-container');
 
 const fetchAccordion = () => {
   $menuContainerActive.lastElementChild.style.height = `${$menuContainerActive.lastElementChild.scrollHeight}px`;
@@ -8,13 +7,14 @@ const fetchAccordion = () => {
 };
 
 window.addEventListener('DOMContentLoaded', fetchAccordion);
+window.addEventListener('load', () => {
+  $menuContainerActive.lastElementChild.style.removeProperty('transition');
+});
 
 $accordion.onclick = e => {
   if (!e.target.classList.contains('menu')) return;
 
-  $menuContainerActive.lastElementChild.style.removeProperty('transition');
-
-  [...$menuContainers].forEach(menuContainer => {
+  [...document.querySelectorAll('.menu-container')].forEach(menuContainer => {
     menuContainer.classList.toggle(
       'active',
       menuContainer.firstElementChild === e.target
