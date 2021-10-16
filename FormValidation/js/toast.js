@@ -30,4 +30,9 @@ const toaster = {
 
 const createToastAction = (type, title, message) => ({ type, title, message });
 
+$body.onclick = e => {
+  if (!e.target.classList.contains('close')) return;
+  e.target.parentNode.remove();
+};
+
 export { toaster, createToastAction };
