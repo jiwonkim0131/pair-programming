@@ -1,4 +1,3 @@
-const $accordion = document.querySelector('.accordion');
 const $menuContainerActive = document.querySelector('.menu-container.active');
 
 const fetchAccordion = () => {
@@ -11,7 +10,7 @@ window.addEventListener('load', () => {
   $menuContainerActive.lastElementChild.style.removeProperty('transition');
 });
 
-$accordion.onclick = e => {
+document.querySelector('.accordion').onclick = e => {
   if (!e.target.classList.contains('menu')) return;
 
   [...document.querySelectorAll('.menu-container')].forEach(menuContainer => {
