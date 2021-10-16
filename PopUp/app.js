@@ -1,20 +1,17 @@
-const $togglePopUp = document.querySelector('.toggle-popup');
 const $modalWrap = document.querySelector('.modal-wrap');
-const $form = document.querySelector('form');
 const $input = document.querySelector('input');
-const $popupMessage = document.querySelector('.popup-message');
 
-$togglePopUp.onclick = () => {
+document.querySelector('.toggle-popup').onclick = () => {
   $modalWrap.classList.toggle('active');
   $input.focus();
 };
 
-$form.onsubmit = e => {
+document.querySelector('form').onsubmit = e => {
   e.preventDefault();
   const content = $input.value.trim();
 
   if (content) {
-    $popupMessage.textContent = content;
+    document.querySelector('.popup-message').textContent = content;
     $input.value = '';
     $modalWrap.classList.remove('active');
   }
