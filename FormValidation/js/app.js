@@ -1,5 +1,11 @@
 import { toaster, createToastAction } from './toast.js';
 
+const $signinForm = document.querySelector('.form.signin');
+const $signupForm = document.querySelector('.form.signup');
+const $signupPassword = document.getElementById('signup-password');
+const $signinLink = document.querySelector('.form.signup .link>a');
+const $signupLink = document.querySelector('.form.signin .link>a');
+
 const inputStatus = {
   userid: {
     RegExp:
@@ -23,21 +29,17 @@ const inputStatus = {
   }
 };
 
-const isSubmit = inputAll =>
-  [...inputAll].every(inputType => inputStatus[inputType.name].status);
+const isSubmit = allInputOfForm =>
+  [...allInputOfForm].every(inputType => inputStatus[inputType.name].status);
+
 const isSamePassword = confirmPassword =>
   confirmPassword === $signupPassword.value;
 
-const $signinForm = document.querySelector('.form.signin');
-const $signupForm = document.querySelector('.form.signup');
-const $signupPassword = document.getElementById('signup-password');
-const $signinLink = document.querySelector('.form.signup .link>a');
-const $signupLink = document.querySelector('.form.signin .link>a');
-
 [$signinForm, $signupForm].forEach($form => {
+  const allInputOfForm = $form.querySelectorAll('input');
+
   $form.oninput = e => {
     const $iconSuccess = e.target.parentNode.querySelector('.icon-success');
-    const inputAll = $form.querySelectorAll('input');
     const $iconError = e.target.parentNode.querySelector('.icon-error');
     const $errorMessage = e.target.parentNode.querySelector('.error');
     const inputName = inputStatus[e.target.name];
@@ -52,14 +54,22 @@ const $signupLink = document.querySelector('.form.signin .link>a');
     $errorMessage.textContent = inputName.status ? '' : inputName.errorMessage;
 
     e.target.closest('.form').querySelector('.button').disabled =
-      !isSubmit(inputAll);
+      !isSubmit(allInputOfForm);
   };
 
   $form.onsubmit = e => {
     e.preventDefault();
+
     toaster.add(
       createToastAction('success', 'Well done!', 'This is a success alert')
     );
+
+    const userInfo = {};
+    allInputOfForm.forEach(input => {
+      userInfo[`${input.nextElementSibling.textContent}`] = `${input.value}`;
+    });
+
+    console.log(userInfo);
   };
 });
 
