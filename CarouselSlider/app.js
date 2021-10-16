@@ -1,6 +1,7 @@
 const $carousel = document.querySelector('.carousel');
 
-const carousel = ($container, images) => {
+const carousel = ($container, _images) => {
+  const images = [_images[_images.length - 1], ..._images, _images[0]];
   const $carouselSlides = document.createElement('div');
   $carouselSlides.classList.add('carousel-slides');
   $carouselSlides.style.setProperty('--currentSlide', 1);
@@ -11,16 +12,14 @@ const carousel = ($container, images) => {
 };
 
 carousel($carousel, [
-  'movies/movie-4.jpg',
   'movies/movie-1.jpg',
   'movies/movie-2.jpg',
   'movies/movie-3.jpg',
-  'movies/movie-4.jpg',
-  'movies/movie-1.jpg'
+  'movies/movie-4.jpg'
 ]);
 
 const $currentSlides = document.querySelector('.carousel-slides');
-const $buttonFragment = document.createDocumentFragment();
+const $fragmentForButtons = document.createDocumentFragment();
 const buttonObj = [
   { key: 'prev', val: '&laquo' },
   { key: 'next', val: '&raquo' }
@@ -34,10 +33,10 @@ buttonObj.forEach(({ key, val }) => {
   const $carouselControl = document.createElement('button');
   $carouselControl.classList.add('carousel-control', key);
   $carouselControl.innerHTML = val;
-  $buttonFragment.appendChild($carouselControl);
+  $fragmentForButtons.appendChild($carouselControl);
 });
 
-$carousel.appendChild($buttonFragment);
+$carousel.appendChild($fragmentForButtons);
 
 window.onload = () => {
   const imageWidth = document.querySelector('img').scrollWidth;
