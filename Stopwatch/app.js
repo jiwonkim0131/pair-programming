@@ -5,22 +5,16 @@ const $laps = document.querySelector('.laps');
 $laps.style.display = 'none';
 
 let buttonState = true;
-let [mm, ss, ms] = [0, 0, 0];
 let stopwatch = null;
+let interval = 0;
 let lapList = [];
 
 const startStopwatch = () => {
-  ms += 1;
+  interval += 1;
+  const mm = Math.floor(interval / 6000);
+  const ss = Math.floor(interval / 100) % 60;
+  const ms = interval % 100;
 
-  if (ms > 99) {
-    ss += 1;
-    ms = 0;
-  }
-
-  if (ss > 59) {
-    mm += 1;
-    ss = 0;
-  }
   $display.textContent = `${mm < 10 ? '0' + mm : mm}:${
     ss < 10 ? '0' + ss : ss
   }:${ms < 10 ? '0' + ms : ms}`;
@@ -45,24 +39,25 @@ $resetOrLapButton.onclick = () => {
     $display.textContent = `00:00:00`;
     $resetOrLapButton.disabled = true;
     $laps.style.display = 'none';
-    [mm, ss, ms] = [0, 0, 0];
+
+    interval = 0;
     lapList = [];
 
-    while ($laps.children.length > 2) {
-      $laps.removeChild($laps.lastElementChild);
-    }
+    [...$laps.children].forEach(lap => {
+      if (!lap.classList.contains('lap-title')) lap.remove();
+    });
   } else {
     $laps.style.display = 'grid';
     lapList.push($display.textContent);
 
-    const $fragment = document.createDocumentFragment();
+    const $fragmentForLaps = document.createDocumentFragment();
     const $lap = document.createElement('div');
-    $lap.textContent = `${lapList[lapList.length - 1]}`;
-    const $order = document.createElement('div');
-    $order.textContent = `${lapList.length}`;
+    $lap.textContent = `${lapList.length}`;
+    const $time = document.createElement('div');
+    $time.textContent = `${lapList[lapList.length - 1]}`;
 
-    $fragment.appendChild($order);
-    $fragment.appendChild($lap);
-    $laps.appendChild($fragment);
+    $fragmentForLaps.appendChild($lap);
+    $fragmentForLaps.appendChild($time);
+    $laps.appendChild($fragmentForLaps);
   }
 };
