@@ -63,3 +63,8 @@ document.querySelector('.show-warning').onclick = () =>
       'This is a warning alert'
     )
   );
+
+$body.onclick = e => {
+  if (!e.target.classList.contains('close')) return;
+  e.target.parentNode.remove();
+};
