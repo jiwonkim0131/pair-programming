@@ -1,4 +1,3 @@
-// DOM Nodes
 const $scrollIcon = document.querySelector('.scroll-icon');
 
 const gotoTop = () => {
@@ -6,13 +5,13 @@ const gotoTop = () => {
 };
 
 const throttle = (callback, delay) => {
-  let timerId;
+  let scrollTiming;
   return event => {
-    if (timerId) return;
-    timerId = setTimeout(
+    if (scrollTiming) return;
+    scrollTiming = setTimeout(
       () => {
         callback(event);
-        timerId = null;
+        scrollTiming = null;
       },
       delay,
       event
@@ -20,9 +19,7 @@ const throttle = (callback, delay) => {
   };
 };
 
-$scrollIcon.onclick = () => {
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-};
+$scrollIcon.onclick = () => window.scrollTo({ top: 0, behavior: 'smooth' });
 
 window.onscroll = throttle(() => {
   gotoTop();
