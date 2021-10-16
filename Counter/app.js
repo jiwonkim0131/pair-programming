@@ -1,9 +1,8 @@
 const counter = (() => {
   let num = 0;
 
-  const $count = document.querySelector('.counter');
   const render = () => {
-    $count.textContent = num;
+    document.querySelector('.counter').textContent = num;
   };
 
   return {
