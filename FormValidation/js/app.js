@@ -1,7 +1,5 @@
 import { toaster, createToastAction } from './toast.js';
 
-const $signinForm = document.querySelector('.form.signin');
-const $signupForm = document.querySelector('.form.signup');
 const $signinLink = document.querySelector('.form.signup .link>a');
 const $signupLink = document.querySelector('.form.signin .link>a');
 
@@ -34,43 +32,41 @@ const isSubmit = allInputOfForm =>
 const isSamePassword = confirmPassword =>
   confirmPassword === document.getElementById('signup-password').value;
 
-[$signinForm, $signupForm].forEach($form => {
+document.body.oninput = e => {
+  const $form = e.target.closest('.form');
   const allInputOfForm = $form.querySelectorAll('input');
+  const [$iconSuccess, $iconError] =
+    e.target.parentNode.querySelectorAll('.icon');
+  const $errorMessage = e.target.parentNode.querySelector('.error');
+  const inputType = inputStatus[e.target.name];
 
-  $form.oninput = e => {
-    const $iconSuccess = e.target.parentNode.querySelector('.icon-success');
-    const $iconError = e.target.parentNode.querySelector('.icon-error');
-    const $errorMessage = e.target.parentNode.querySelector('.error');
-    const inputName = inputStatus[e.target.name];
+  inputType.status =
+    e.target.name !== 'confirm-password'
+      ? inputType.RegExp.test(e.target.value)
+      : isSamePassword(e.target.value);
 
-    inputName.status =
-      e.target.name !== 'confirm-password'
-        ? inputName.RegExp.test(e.target.value)
-        : isSamePassword(e.target.value);
+  $iconSuccess.classList.toggle('hidden', !inputType.status);
+  $iconError.classList.toggle('hidden', inputType.status);
+  $errorMessage.textContent = inputType.status ? '' : inputType.errorMessage;
 
-    $iconSuccess.classList.toggle('hidden', !inputName.status);
-    $iconError.classList.toggle('hidden', inputName.status);
-    $errorMessage.textContent = inputName.status ? '' : inputName.errorMessage;
+  e.target.closest('.form').querySelector('.button').disabled =
+    !isSubmit(allInputOfForm);
+};
 
-    e.target.closest('.form').querySelector('.button').disabled =
-      !isSubmit(allInputOfForm);
-  };
+document.body.onsubmit = e => {
+  e.preventDefault();
 
-  $form.onsubmit = e => {
-    e.preventDefault();
+  toaster.add(
+    createToastAction('success', 'Well done!', 'This is a success alert')
+  );
 
-    toaster.add(
-      createToastAction('success', 'Well done!', 'This is a success alert')
-    );
+  const userInfo = {};
+  e.target.querySelectorAll('input').forEach(input => {
+    userInfo[`${input.nextElementSibling.textContent}`] = `${input.value}`;
+  });
 
-    const userInfo = {};
-    allInputOfForm.forEach(input => {
-      userInfo[`${input.nextElementSibling.textContent}`] = `${input.value}`;
-    });
-
-    console.log(userInfo);
-  };
-});
+  console.log(userInfo);
+};
 
 [$signinLink, $signupLink].forEach($formLink => {
   $formLink.onclick = () => {

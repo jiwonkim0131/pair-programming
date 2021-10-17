@@ -10,7 +10,7 @@ const toaster = {
     $body.appendChild($toast);
 
     $toast.innerHTML = `
-      <h4 class="toast-heading">${callback.title} ${toastQueue.length - 1}</h4>
+      <h4 class="toast-heading">${callback.title}</h4>
       <div class="toast-message">
         <svg width="24" height="24">
           <use xlink:href="#${callback.type}" />
